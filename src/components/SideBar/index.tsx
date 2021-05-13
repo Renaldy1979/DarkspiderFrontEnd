@@ -2,12 +2,12 @@ import React from 'react';
 
 import { Container } from './styles';
 
-const Dashboard: React.FC = () => {
+const SideBar: React.FC = () => {
   return (
     <Container>
-      <h1>Dashboard</h1>
+      <h1>sidebar</h1>
     </Container>
   );
 };
 
-export default Dashboard;
+export default SideBar;

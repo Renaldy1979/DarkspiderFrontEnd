@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
 
-import api from '../services/api';
+import { api } from '../services/api';
 
 interface User {
   id: string;
@@ -33,6 +33,7 @@ const AuthProvider: React.FC = ({ children }) => {
     const user = localStorage.getItem('@DarkSpider:user');
 
     if (token && user) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
       return { token, user: JSON.parse(user) };
     }
 
@@ -54,8 +55,8 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('@GoBarber:token');
-    localStorage.removeItem('@GoBarber:user');
+    localStorage.removeItem('@DarkSpider:token');
+    localStorage.removeItem('@DarkSpider:user');
 
     setData({} as AuthState);
   }, []);
