@@ -1,11 +1,9 @@
-import React, { useEffect, useMemo, useState, memo } from 'react';
+import React, { useEffect, useMemo, useState, memo, useCallback } from 'react';
 
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar';
 import SideBar from '../../components/SideBar';
 import BottomMenu from '../../components/BottomMenu';
-
-// import { useAuth } from '../../hooks/auth';
 
 import {
   Container,
@@ -21,8 +19,6 @@ import {
   BellIcon,
   Main,
   ProjectsTable,
-  EditIcon,
-  DeleteIcon,
 } from './styles';
 
 import { api } from '../../services/api';
@@ -37,10 +33,10 @@ interface IProject {
     id: string;
     name: string;
   };
+  status: { id: string; description: string };
 }
 
-const ListProjects: React.FC = () => {
-  // const { user } = useAuth();
+const ListProjects = (): JSX.Element => {
   const [projects, setProjects] = useState<IProject[]>([]);
   const [busca, setBusca] = useState('');
 
@@ -63,7 +59,14 @@ const ListProjects: React.FC = () => {
     );
   }, [busca, projects]);
 
-  console.log('Pagina de projetos');
+  const history = useHistory();
+
+  const handleOpenProject = useCallback(
+    (id: string) => {
+      history.push(`/show-project?id=${id}`);
+    },
+    [history],
+  );
 
   return (
     <Container>
@@ -97,30 +100,22 @@ const ListProjects: React.FC = () => {
                     <th>Breve Descrição</th>
                     <th>Iniciativa</th>
                     <th>Solicitante</th>
-                    <th>Ações</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {projectsFiltered.map((project: IProject) => (
-                    <tr key={project.id}>
-                      <td>{project.code}</td>
+                    <tr
+                      key={project.id}
+                      onClick={() => handleOpenProject(project.id)}
+                      className="link"
+                    >
+                      <td className="fitwidth">{project.code}</td>
                       <td className="projectName">{project.name}</td>
-                      <td>{project.brief_description}</td>
+                      <td className="smallfont">{project.brief_description}</td>
                       <td>{project.initiative}</td>
-                      <td>{project.requester.name}</td>
-                      <td>
-                        <button type="button" className="editProject">
-                          <NavLink
-                            to={`/show-project?id=${project.id}`}
-                            key={project.id}
-                          >
-                            <EditIcon />
-                          </NavLink>
-                        </button>
-                        <button type="button" className="deleteProject">
-                          <DeleteIcon />
-                        </button>
-                      </td>
+                      <td className="fitwidth">{project.requester.name}</td>
+                      <td>{project.status.description}</td>
                     </tr>
                   ))}
                 </tbody>

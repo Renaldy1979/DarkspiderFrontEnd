@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container, HomeIcon, SearchIcon, BellIcon, EmailIcon } from './styles';
 
-const BottomMenu: React.FC = () => {
+export function BottomMenu() {
   return (
     <Container>
       <HomeIcon className="active" />
@@ -11,6 +11,6 @@ const BottomMenu: React.FC = () => {
       <EmailIcon />
     </Container>
   );
-};
+}
 
 export default BottomMenu;

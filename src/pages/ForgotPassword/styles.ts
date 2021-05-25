@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
-
+import { DarkspiderIcon } from '../../styles/icons';
 import signInBackground from '../../assets/sign-in-background.png';
 
 export const Container = styled.div`
@@ -43,17 +43,17 @@ export const AnimationContainer = styled.div`
       margin-bottom: 24px;
     }
   }
-    a {
-      color: #f4ede8;
-      display: block;
-      margin-top: 24px;
-      text-decoration: none;
-      transition: color 0.2s;
-      &:hover {
-        color: ${shade(0.2, '#f4ede8')};
-      }
+  a {
+    color: #f4ede8;
+    display: block;
+    margin-top: 24px;
+    text-decoration: none;
+    transition: color 0.2s;
+    &:hover {
+      color: ${shade(0.2, '#f4ede8')};
     }
   }
+
   > a {
     color: #ff9000;
     display: block;
@@ -68,10 +68,23 @@ export const AnimationContainer = styled.div`
     &:hover {
       color: ${shade(0.2, '#ff9000')};
     }
+  }
 `;
 
 export const Background = styled.div`
   flex: 1;
   background: url(${signInBackground}) no-repeat center;
   background-size: cover;
+`;
+
+export const Logo = styled(DarkspiderIcon)`
+  @media (min-width: 1280px) {
+    width: 335;
+    height: 62;
+    display: flex;
+    align-items: center;
+    .dark {
+      fill: var(--secondary);
+    }
+  }
 `;

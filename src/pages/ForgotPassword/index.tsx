@@ -8,28 +8,32 @@ import { FormHandles } from '@unform/core';
 
 import { useToast } from '../../hooks/toast';
 
-import logoImg from '../../assets/logo.svg';
-
 import getValidationErrors from '../../utils/getValidationsErrors';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Container, Content, Background, AnimationContainer } from './styles';
+import {
+  Container,
+  Content,
+  Background,
+  AnimationContainer,
+  Logo,
+} from './styles';
 import { api } from '../../services/api';
 
-interface ForgoPasswordFormData {
+interface ForgotPasswordFormData {
   email: string;
 }
 
-const ForgoPassword: React.FC = () => {
+const ForgotPassword: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const formRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
-    async (data: ForgoPasswordFormData) => {
+    async (data: ForgotPasswordFormData) => {
       try {
         setLoading(true);
         formRef.current?.setErrors({});
@@ -81,7 +85,7 @@ const ForgoPassword: React.FC = () => {
     <Container>
       <Content>
         <AnimationContainer>
-          <img src={logoImg} alt="DarkSpider" />
+          <Logo />
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Recuperar Senha</h1>
 
@@ -102,4 +106,4 @@ const ForgoPassword: React.FC = () => {
   );
 };
 
-export default ForgoPassword;
+export default ForgotPassword;

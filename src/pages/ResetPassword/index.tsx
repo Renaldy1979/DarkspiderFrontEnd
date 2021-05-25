@@ -8,14 +8,18 @@ import { FormHandles } from '@unform/core';
 
 import { useToast } from '../../hooks/toast';
 
-import logoImg from '../../assets/logo.svg';
-
 import getValidationErrors from '../../utils/getValidationsErrors';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Container, Content, Background, AnimationContainer } from './styles';
+import {
+  Container,
+  Content,
+  Background,
+  AnimationContainer,
+  Logo,
+} from './styles';
 import { api } from '../../services/api';
 
 interface ResetPasswordFormData {
@@ -88,7 +92,7 @@ const ResetPassword: React.FC = () => {
     <Container>
       <Content>
         <AnimationContainer>
-          <img src={logoImg} alt="DarkSpider" />
+          <Logo />
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Resetar Senha</h1>
 

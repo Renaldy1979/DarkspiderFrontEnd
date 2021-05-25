@@ -11,12 +11,16 @@ import { useToast } from '../../hooks/toast';
 
 import getValidationErrors from '../../utils/getValidationsErrors';
 
-import logoImg from '../../assets/logo.svg';
-
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Container, Content, AnimationContainer, Background } from './styles';
+import {
+  Container,
+  Content,
+  AnimationContainer,
+  Background,
+  Logo,
+} from './styles';
 
 interface SignUpFormData {
   name: string;
@@ -29,7 +33,6 @@ const SignUp: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
 
-  console.log(formRef);
   const handleSubmit = useCallback(
     async (data: SignUpFormData) => {
       try {
@@ -78,7 +81,7 @@ const SignUp: React.FC = () => {
       <Background />
       <Content>
         <AnimationContainer>
-          <img src={logoImg} alt="DarkSpider" />
+          <Logo />
           <Form
             ref={formRef}
             initialData={{ name: '' }}

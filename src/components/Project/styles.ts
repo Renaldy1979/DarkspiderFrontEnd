@@ -1,14 +1,8 @@
 import { tint } from 'polished';
 import styled from 'styled-components';
-import {
-  FaArrowAltCircleRight,
-  GiOrganigram,
-  MdPerson,
-} from '../../styles/icons';
+import { MdPerson, BsThreeDotsVertical } from '../../styles/icons';
 
 export const Container = styled.div`
-  /* display: flex; */
-  /* flex: 1; */
   width: 100%;
 `;
 
@@ -38,23 +32,33 @@ export const CardHeader = styled.div`
 
 export const ProjectHeader = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: space-between;
+  min-height: 40px;
 
-  .project-title {
-    max-width: 100%;
-  }
-  .project-title-more {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-end;
+  button {
+    width: 41px;
+    height: 41px;
+    font-size: 20px;
+    min-width: 41px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 30px;
+    color: #999;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 14px 26px -12px rgb(153 153 153 / 42%),
+        0 4px 23px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(153 153 153 / 20%);
+    }
   }
 
   h1 {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 40px;
+    flex: 1;
   }
 `;
 
@@ -62,7 +66,7 @@ export const CardContent = styled.div`
   margin-top: 20px;
   padding: 0 20px 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   width: 100%;
   flex-direction: column;
@@ -114,41 +118,11 @@ export const ProjectDescription = styled.div`
 
 export const ProjectJustification = styled(ProjectDescription)``;
 
-export const ProjectStatus = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  flex-wrap: wrap;
-  span {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-`;
-
-export const ProjectStatusItem = styled.div`
-  width: auto;
-  margin: 5px;
-  padding: 10px;
-  background: var(--outline);
-  color: var(--text-body-light);
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: 4px;
-  flex: 1 1 auto;
-  text-align: center;
-`;
-
 export const ProjectUpdated = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-`;
-
-export const ArrowIcon = styled(FaArrowAltCircleRight)`
-  margin: 0 5px;
-  fill: var(--outline);
 `;
 
 export const ProjetcOwner = styled.div`
@@ -178,3 +152,5 @@ export const OwnerIcon = styled(MdPerson)`
   width: 26px;
   margin-right: 8px;
 `;
+
+export const OptionsProject = styled(BsThreeDotsVertical)``;

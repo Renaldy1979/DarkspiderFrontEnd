@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
-
+import { DarkspiderIcon } from '../../styles/icons';
 import signInBackground from '../../assets/sign-in-background.png';
 
 export const Container = styled.div`
@@ -74,4 +74,16 @@ export const Background = styled.div`
   flex: 1;
   background: url(${signInBackground}) no-repeat center;
   background-size: cover;
+`;
+
+export const Logo = styled(DarkspiderIcon)`
+  @media (min-width: 1280px) {
+    width: 335;
+    height: 62;
+    display: flex;
+    align-items: center;
+    .dark {
+      fill: var(--secondary);
+    }
+  }
 `;

@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { FormHandles } from '@unform/core';
-import { Form } from '@unform/web';
+import Modal from 'react-modal';
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -16,7 +15,7 @@ import BottomMenu from '../../components/BottomMenu';
 import MenuBar from '../../components/MenuBar';
 import SideBar from '../../components/SideBar';
 import Project from '../../components/Project';
-
+import EditProjectModal from '../../components/EditProjectModal';
 import { MdPerson } from '../../styles/icons';
 import {
   GrStatusGood as ChangeStatus,
@@ -38,16 +37,22 @@ import {
   Main,
 } from './styles';
 
-import { IProject } from '../../interfaces/Project';
+import IProject from '../../interfaces/IProject';
+
+Modal.setAppElement('#root');
 
 const ShowProject: React.FC = () => {
-  // const formRef = useRef<FormHandles>(null);
   const [project, setProjet] = useState<IProject>({} as IProject);
   const id = new URLSearchParams(useLocation().search).get('id');
 
-  const handleSubmit = useCallback(() => {
-    console.log('');
-  }, []);
+  const [isProjectEditOpenModel, setIsProjectEditOpenModel] = useState(false);
+
+  function handleOpenProjectEdit() {
+    setIsProjectEditOpenModel(true);
+  }
+  function handleCloseProjectEdit() {
+    setIsProjectEditOpenModel(false);
+  }
 
   useEffect(() => {
     api
@@ -60,9 +65,8 @@ const ShowProject: React.FC = () => {
       });
   }, [id]);
 
-  const ChangeStatusStyles = { background: '#06D6A0' };
-  const AlertStatusStyles = { background: '#f9c74f' };
-
+  const ChangeStatusStyles = { background: '#4caf50' };
+  const AlertStatusStyles = { background: '#ff9000' };
   return (
     <Container>
       <Wrapper>
@@ -73,11 +77,7 @@ const ShowProject: React.FC = () => {
               <strong>Detalhes do Projeto</strong>
             </Title>
             <SearchWrapper>
-              <SearchInput
-                placeholder="Buscar na Lista"
-                // value={busca}
-                // onChange={ev => setBusca(ev.target.value)}
-              />
+              <SearchInput placeholder="Buscar na Lista" />
               <SearchIcon />
             </SearchWrapper>
             <NotificationWrapper>
@@ -86,7 +86,10 @@ const ShowProject: React.FC = () => {
             </NotificationWrapper>
           </Header>
           <Main>
-            <Project project={project} />
+            <Project
+              project={project}
+              onOpenProjectEditModel={handleOpenProjectEdit}
+            />
             <VerticalTimeline
               layout="1-column"
               animate={false}
@@ -105,7 +108,7 @@ const ShowProject: React.FC = () => {
                       height: '100%',
                     }}
                     iconStyle={
-                      isAlertIcon ? AlertStatusStyles : ChangeStatusStyles
+                      isAlertIcon ? ChangeStatusStyles : AlertStatusStyles
                     }
                     icon={isAlertIcon ? <AlertStatus /> : <ChangeStatus />}
                   >
@@ -128,6 +131,11 @@ const ShowProject: React.FC = () => {
         </Content>
         <SideBar />
       </Wrapper>
+      <EditProjectModal
+        isOpen={isProjectEditOpenModel}
+        onRequestClose={handleCloseProjectEdit}
+        project={project}
+      />
     </Container>
   );
 };

@@ -1,4 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+
+import formatDate from '../../utils/formatDate';
+
 import {
   Container,
   Card,
@@ -10,116 +13,105 @@ import {
   ProjectHeader,
   ProjectDescription,
   ProjectJustification,
-  ProjectStatus,
   ProjectUpdated,
-  ProjectStatusItem,
-  ArrowIcon,
   ProjetcOwner,
   ProjectOwnerItem,
   OwnerIcon,
+  OptionsProject,
 } from './styles';
 
-import { IProject } from '../../interfaces/Project';
+import ProjectStatus from '../ProjectStatus';
+import IProject from '../../interfaces/IProject';
 
-const Project: React.FC<IProject> = ({ id, ...rest }) => {
+import { EditInPlace } from '../EditInPlace';
+import { api } from '../../services/api';
+
+interface ProjectProps {
+  project: IProject;
+  onOpenProjectEditModel: () => void;
+}
+
+interface FormValueProps {
+  [key: string]: string;
+}
+
+export function Project({ project, onOpenProjectEditModel }: ProjectProps) {
+  const [formValue, setFormValue] = useState<FormValueProps>({});
+
+  // const fcn = useCallback(
+  //   e => {
+  //     const { name, value } = e.target;
+  //     setFormValue({ ...formValue, project_id: project.id, [name]: value });
+  //   },
+  //   [formValue, project.id],
+  // );
+
+  console.log(formValue);
   return (
     <Container>
       <Card>
         <CardHeader>
           <ProjectHeader>
-            <div className="project-title">
-              <h1>
-                Controle no NBA - Drop 3 [Mecânica Get RTDM e MA sem incentivo
-                {id}
-              </h1>
-            </div>
+            <h1>{project.name}</h1>
+            <button type="button" onClick={onOpenProjectEditModel}>
+              <OptionsProject />
+            </button>
           </ProjectHeader>
         </CardHeader>
         <CardContent>
           <ProjectDescription>
             <span>Breve Descrição</span>
-            <p>
-              Disponibilizar informações do ambiente SAS-CDM no Big Data, a fim
-              de não impactar o ambiente transacional e possibilitar análises e
-              explorações no âmbito analítico.
-            </p>
+            <p>{project.brief_description}</p>
           </ProjectDescription>
           <Divider />
           <ProjectJustification>
             <span>Defesa/Justificativa</span>
-            <p>
-              Disponibilizar dentro do NBA a possibilidade de campanhas com
-              incentivo e contratação de plugin para o controle
-            </p>
+            <p>{project.justification}</p>
           </ProjectJustification>
           <Divider />
           <ProjectDataContainer>
             <ProjectDataItem>
               <span>Solicitação</span>
-              <p>20/05/2021</p>
+              <p>{formatDate(project.request_date)}</p>
+              <EditInPlace
+                value={formatDate(project.request_date)}
+                name="request_date"
+                onChangeValue={setFormValue}
+              />
             </ProjectDataItem>
             <ProjectDataItem>
               <span>Escrita DE</span>
-              <p>20/05/2021</p>
+              <p>{formatDate(project.scope_date)}</p>
+              <EditInPlace
+                value={formatDate(project.scope_date)}
+                name="scope_date"
+                onChangeValue={setFormValue}
+              />
             </ProjectDataItem>
             <ProjectDataItem>
               <span>Envio SC</span>
-              <p>20/05/2021</p>
+              <p>{formatDate(project.shipping_date)}</p>
             </ProjectDataItem>
             <ProjectDataItem>
               <span>Postagem</span>
-              <p>20/05/2021</p>
+              <p>{formatDate(project.post_date)}</p>
+              <EditInPlace
+                value={formatDate(project.post_date)}
+                name="post_date"
+                onChangeValue={setFormValue}
+              />
             </ProjectDataItem>
             <ProjectDataItem>
               <span>Rollout</span>
-              <p>20/05/2021</p>
+              <p>{formatDate(project.rollout_date)}</p>
             </ProjectDataItem>
             <ProjectDataItem>
               <span>Expectativa MKT</span>
-              <p>20/05/2021</p>
+              <p>{formatDate(project.expectation_date)}</p>
             </ProjectDataItem>
           </ProjectDataContainer>
           <Divider />
-          <ProjectStatus>
-            <span>Status - Timeline</span>
-            <ProjectStatusItem>
-              Necessidade enviada para Automação
-            </ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>Análise de Automação</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>
-              Use Cases em definição por Segmento
-            </ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>DE sendo escrita</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>DE em revisão por segmento</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>
-              Aguardando Priorização por Segmento
-            </ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>Demanda com baixa prioridade</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>DE Fechada</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>DE enviada para SC</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>Apresentação DL Projetos</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>Aguardando análise TI</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>Aguardando Plano de Entrega</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>Em desenvolvimento</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>Teste IT/UAT</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>Rollout Planejado</ProjectStatusItem>
-            <ArrowIcon />
-            <ProjectStatusItem>Concluída</ProjectStatusItem>
-          </ProjectStatus>
+          <ProjectStatus statusId={project.status_id} />
           <Divider />
           <ProjetcOwner>
             <ProjectOwnerItem>
@@ -131,18 +123,21 @@ const Project: React.FC<IProject> = ({ id, ...rest }) => {
               <OwnerIcon />
               <p>Juliana Pilloto</p>
               <OwnerIcon />
-              <p>Lucas Lial</p>
+              <p>{project.requester?.name}</p>
             </ProjectOwnerItem>
           </ProjetcOwner>
           <Divider />
           <ProjectUpdated>
             <span>Última atualização</span>
-            <p>Em 21/05/2021 por Renaldy Pereira Sousa</p>
+            <p>
+              Em {formatDate(project.updated_at)}
+              por {project.updater?.name}
+            </p>
           </ProjectUpdated>
         </CardContent>
       </Card>
     </Container>
   );
-};
+}
 
 export default Project;

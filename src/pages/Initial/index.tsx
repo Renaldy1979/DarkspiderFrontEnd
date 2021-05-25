@@ -3,8 +3,6 @@ import React from 'react';
 import BottomMenu from '../../components/BottomMenu';
 import MenuBar from '../../components/MenuBar';
 import SideBar from '../../components/SideBar';
-
-// import { useAuth } from '../../hooks/auth';
 import {
   Container,
   Wrapper,
@@ -27,11 +25,7 @@ import {
   CardFooter,
 } from './styles';
 
-// import { api } from '../../services/api';
-
-const Initial: React.FC = () => {
-  // const { user } = useAuth();
-  console.log('Pagina inicial');
+const Initial = (): JSX.Element => {
   return (
     <Container>
       <Wrapper>

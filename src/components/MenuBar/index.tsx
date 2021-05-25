@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-
-import { useAuth } from '../../hooks/auth';
+import { AuthContext } from '../../hooks/auth';
 
 import {
   Container,
   Header,
+  Logo,
+  ProfileHeader,
+  ProfileEdit,
+  ProfileButton,
   Content,
   MenuButton,
-  Logo,
-  Avatar,
   HomeIcon,
-  Profile,
   ProjectIcon,
+  ExitIcon,
+  Divider,
 } from './styles';
 
 const MenuBar: React.FC = () => {
-  const { user } = useAuth();
   const SidebarData = [
     {
       title: 'Página Inicial',
@@ -28,43 +29,41 @@ const MenuBar: React.FC = () => {
       path: '/list-projects',
       icon: <ProjectIcon />,
     },
-    // {
-    //   title: 'Atributos',
-    //   path: '/atributos',
-    //   icon: <AttributesIcon />,
-    // },
-    // {
-    //   title: 'Campanhas',
-    //   path: '/campanhas',
-    //   icon: <CampaignIcon />,
-    // },
   ];
 
-  // const [selectedIndex, setSelectedIndex] = usePeristedState(
-  //   'selectedIndex',
-  //   0,
-  // );
-
-  // const handleListItemActived = useCallback(
-  //   (index: number) => {
-  //     setSelectedIndex(index);
-  //   },
-  //   [setSelectedIndex],
-  // );
   const location = useLocation();
+  const { user, signOut } = useContext(AuthContext);
+  const [openProfile, setOpenProfile] = useState(false);
 
   let actived = '';
   return (
     <Container>
       <Header>
         <Logo />
-        <Avatar>
-          <img src={user.avatar_url} alt={user.name} />
-        </Avatar>
-        <Profile>
-          <strong>Renaldy Sousa</strong>
-        </Profile>
-        {/* <ExitIcon /> */}
+        <ProfileHeader
+          onClick={() => {
+            setOpenProfile(!openProfile);
+          }}
+        >
+          <img src={user?.avatar_url} alt={user?.name} />
+          <strong>{user?.name}</strong>
+        </ProfileHeader>
+        <ProfileEdit style={{ display: openProfile ? 'flex' : 'none' }}>
+          <Divider />
+          <ProfileButton
+            onClick={() => {
+              signOut();
+            }}
+          >
+            <ExitIcon
+              onClick={() => {
+                signOut();
+              }}
+            />{' '}
+            <span>Logout</span>
+          </ProfileButton>
+          <Divider />
+        </ProfileEdit>
       </Header>
       <Content>
         {SidebarData.map((item, index) => {
@@ -75,11 +74,7 @@ const MenuBar: React.FC = () => {
           }
 
           return (
-            <NavLink
-              key={index.toString()}
-              // onClick={() => handleListItemActived(index)}
-              to={item.path}
-            >
+            <NavLink key={index.toString()} to={item.path}>
               <MenuButton className={actived}>
                 {item.icon}
                 <span>{item.title}</span>

@@ -1,4 +1,8 @@
-export interface IProject {
+import { ReactNode } from 'react';
+import IUser from './IUser';
+import IStatus from './IStatus';
+
+export default interface IProject {
   id: string;
   code: string;
   name: string;
@@ -8,7 +12,6 @@ export interface IProject {
   effort: string;
   brief_description: string;
   justification: string;
-  requester_id: string;
   request_date: string;
   scope_date: string;
   shipping_date: string;
@@ -17,9 +20,13 @@ export interface IProject {
   expectation_date: string;
   validated_scope: string;
   responsible_status: string;
+  requester_id: string;
   status_id: string;
   created_at: string;
-  created_by: string;
   updated_at: string;
-  updated_by: string;
+  status: IStatus;
+  requester: IUser;
+  creater: IUser;
+  updater: IUser;
+  children: ReactNode;
 }

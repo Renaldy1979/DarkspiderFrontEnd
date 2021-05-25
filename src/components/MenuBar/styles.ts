@@ -106,23 +106,68 @@ export const Avatar = styled.div`
     flex-shrink: 0;
     width: 80px;
     height: 80px;
-    border-radius: 50%;
     background: var(--tertiary);
     margin-bottom: 15px;
   }
 `;
 
-export const Profile = styled.div`
+export const ProfileHeader = styled.div`
   display: none;
   @media (min-width: 1280px) {
     display: flex;
-    flex-direction: column;
+    margin-bottom: 10px;
+    flex-direction: row;
     align-items: center;
-
+    cursor: pointer;
     > strong {
       font-size: 18px;
-      color: var(--spider);
+      color: var(--white);
+
+      font-variant-caps: all-petite-caps;
     }
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+  }
+`;
+
+export const ProfileEdit = styled.div`
+  display: none;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const ProfileButton = styled.div`
+  display: flex;
+  padding: 10px 0;
+  margin: 15px 0;
+  border-radius: 3px;
+  align-items: center;
+  transition: all 300ms linear;
+  color: var(--white);
+  cursor: pointer;
+  width: 100%;
+  > svg {
+    color: var(--white);
+    height: 24px;
+    width: 24px;
+    margin-left: 8.25px;
+  }
+
+  > span {
+    margin-left: 8px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  &:hover {
+    background: ${shade(0.4, '#fff')};
+  }
+  &.active {
+    background: var(--spider);
   }
 `;
 
@@ -165,8 +210,10 @@ export const AttributesIcon = styled(MdFilterList)`
 export const CampaignIcon = styled(GiSupersonicArrow)`
   ${iconCSS}
 `;
-// export const Botside = styled.div`
-//   margin-top: 20px;
-//   display: flex;
-//   align-items: center;
-// `;
+export const Divider = styled.div`
+  background: var(--outline);
+  height: 1px;
+  content: '';
+  width: 100%;
+  margin: 0;
+`;

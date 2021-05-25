@@ -43,21 +43,32 @@ export default createGlobalStyle`
     --outline: #EAE1DB;
     --text-body-light: #999591;
     --text-body-dark: #514C5C;
-    --success: #4caf50;
-    --error: #f44336;
-
-    /* --primary: #F4EDE8;
-    --secondary: #28262E;
-    --tertiary: #3E3B47;
-    
-    --spider-dark-hover: #011017;
-    --spider-light-hover: #FFC77F;
-    --white: #f4f4f4;
-    --gray: #999591;
-    --outline: #EAE1DB;
-    --dark-hover: #011017;
-    --search: #f4f4f4; */
-
+    --green: #4caf50;
+    --red: #f44336;
+    --blue:#1D63EA;
  
+  }
+
+  .react-modal-content {
+    width: 100%;
+    max-width: 800px;
+    background: var(--primary);
+    padding: 2.5rem;
+    position: relative;
+    border-radius: 0.24rem;
+  }
+
+  .react-modal-close {
+    background: rgba(255, 255, 255, 0.8);
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;

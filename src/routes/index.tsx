@@ -1,6 +1,6 @@
 import React from 'react';
-import { Redirect, Switch } from 'react-router-dom';
-import Route from './Route';
+import { Redirect, Switch, Route } from 'react-router-dom';
+// import Route from './Route';
 
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
@@ -20,9 +20,9 @@ const Routes: React.FC = () => {
       <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/reset-password" component={ResetPassword} />
 
-      <Route path="/initial" component={Initial} isPrivate />
-      <Route path="/list-projects" component={ListProjects} isPrivate />
-      <Route path="/show-project" component={ShowProject} isPrivate />
+      <Route path="/initial" component={Initial} />
+      <Route path="/list-projects" component={ListProjects} />
+      <Route path="/show-project" component={ShowProject} />
 
       <Route path="/page-not-found" component={PageNotFound} />
 

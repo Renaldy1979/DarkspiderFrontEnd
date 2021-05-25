@@ -1,81 +1,100 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { api } from '../services/api';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  avatar_url: string;
-}
-
-interface AuthState {
-  token: string;
-  user: User;
-}
 
 interface SignInCredentials {
   email: string;
   password: string;
 }
 
-interface AuthContextData {
-  user: User;
-  signIn(credentials: SignInCredentials): Promise<void>;
-  signOut(): void;
+interface User {
+  id: string;
+  email: string;
+  roles: string[];
+  avatar_url: string;
+  name: string;
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+interface AuthContextData {
+  signIn(credentials: SignInCredentials): Promise<void>;
+  signOut(): Promise<void>;
+  isAuthenticated: boolean;
+  user: User | undefined;
+}
 
-const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState<AuthState>(() => {
+type AuthProviderProps = {
+  children: ReactNode;
+};
+
+export const AuthContext = createContext({} as AuthContextData);
+
+export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
+  const [user, setUser] = useState<User>();
+  const isAuthenticated = !!user;
+  const history = useHistory();
+
+  useEffect(() => {
     const token = localStorage.getItem('@DarkSpider:token');
-    const user = localStorage.getItem('@DarkSpider:user');
 
-    if (token && user) {
-      api.defaults.headers.authorization = `Bearer ${token}`;
-      return { token, user: JSON.parse(user) };
+    if (token) {
+      api
+        .get('/profile')
+        .then(response => {
+          const { id, roles, email, avatar_url, name } = response.data;
+
+          setUser({ id, email, roles, avatar_url, name });
+        })
+        .catch(() => {
+          localStorage.removeItem('@DarkSpider:token');
+          localStorage.removeItem('@DarkSpider:refresh_token');
+          history.push('/');
+        });
     }
+  }, [history]);
+  async function signIn({ email, password }: SignInCredentials) {
+    try {
+      const response = await api.post('/sessions', {
+        email,
+        password,
+      });
 
-    return {} as AuthState;
-  });
+      const {
+        token,
+        refresh_token,
+        sub: id,
+        roles,
+        avatar_url,
+        name,
+      } = response.data;
 
-  const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('sessions', {
-      email,
-      password,
-    });
+      localStorage.setItem('@DarkSpider:token', token);
+      localStorage.setItem('@DarkSpider:refresh_token', refresh_token);
 
-    const { token, user } = response.data;
+      setUser({
+        id,
+        roles,
+        email,
+        avatar_url,
+        name,
+      });
 
-    localStorage.setItem('@DarkSpider:token', token);
-    localStorage.setItem('@DarkSpider:user', JSON.stringify(user));
+      api.defaults.headers.Authorization = `Bearer ${token}`;
+      history.push('/initial');
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-    setData({ token, user });
-  }, []);
-
-  const signOut = useCallback(() => {
+  async function signOut() {
     localStorage.removeItem('@DarkSpider:token');
-    localStorage.removeItem('@DarkSpider:user');
-
-    setData({} as AuthState);
-  }, []);
+    localStorage.removeItem('@DarkSpider:refresh_token');
+    history.push('/');
+  }
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-function useAuth(): AuthContextData {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-
-  return context;
 }
-
-export { AuthProvider, useAuth };

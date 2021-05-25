@@ -37,7 +37,7 @@ export const Title = styled.div`
 `;
 
 export const Header = styled.div`
-  z-index: 2;
+  z-index: 0;
   position: sticky;
   background: var(--primary);
 
