@@ -1,23 +1,7 @@
 import styled from 'styled-components';
 import { MdModeEdit, MdClose, MdSearch } from '../../styles/icons';
 
-export {
-  Container,
-  Wrapper,
-  Content,
-  Header,
-  Title,
-  SearchWrapper,
-  SearchInput,
-  SearchIcon,
-  BellIcon,
-  NotificationWrapper,
-  Notification,
-} from '../styles';
-
-export const Main = styled.div`
-  margin-left: 10px;
-`;
+export { Container, Wrapper, Content, Title, Main } from '../styles';
 
 export const Projects = styled.div``;
 

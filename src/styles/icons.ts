@@ -5,13 +5,20 @@ export {
   FiCode,
   FiCheckSquare,
 } from 'react-icons/fi';
-export { IoHome, IoSearch, IoAlertCircleSharp } from 'react-icons/io5';
+export {
+  IoHome,
+  IoSearch,
+  IoAlertCircleSharp,
+  IoChatboxEllipses,
+  IoCheckmarkCircleSharp,
+} from 'react-icons/io5';
 export { IoIosMail } from 'react-icons/io';
 export {
   BsBell,
   BsSearch,
   BsFillBellFill,
   BsThreeDotsVertical,
+  BsPersonFill,
 } from 'react-icons/bs';
 export {
   MdExitToApp,
@@ -25,5 +32,4 @@ export { GoProject } from 'react-icons/go';
 export { GiSupersonicArrow } from 'react-icons/gi';
 export { FaArrowAltCircleRight } from 'react-icons/fa';
 export { GiOrganigram } from 'react-icons/gi';
-export { GrStatusGood } from 'react-icons/gr';
 export { DarkspiderIcon } from '../components/DarkspiderIcon';

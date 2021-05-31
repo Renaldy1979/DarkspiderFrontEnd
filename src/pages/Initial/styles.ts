@@ -5,23 +5,7 @@ interface ContainerProps {
   color: string;
 }
 
-export {
-  Container,
-  Wrapper,
-  Content,
-  Header,
-  Title,
-  SearchWrapper,
-  SearchInput,
-  SearchIcon,
-  BellIcon,
-  NotificationWrapper,
-  Notification,
-} from '../styles';
-
-export const Main = styled.div`
-  margin-left: 10px;
-`;
+export { Container, Wrapper, Content, Title, Main } from '../styles';
 
 export const GridContainer = styled.div`
   width: 100%;

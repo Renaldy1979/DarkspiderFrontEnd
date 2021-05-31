@@ -4,18 +4,20 @@ import { MdPerson, BsThreeDotsVertical } from '../../styles/icons';
 
 export const Container = styled.div`
   width: 100%;
+  margin-right: 30px;
 `;
 
 export const Card = styled.div`
-  background: var(--white);
-  margin-right: 40px;
-  box-shadow: 4px 4px 4px 0 rgb(0 0 0 / 14%);
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  background: var(--white);
+  margin-right: 40px;
+  box-shadow: 4px 4px 4px 0 rgb(0 0 0 / 14%);
   flex-direction: column;
   margin-top: 30px;
   border-radius: 4px;
+  width: 100%;
 `;
 
 export const CardHeader = styled.div`
@@ -36,6 +38,25 @@ export const ProjectHeader = styled.div`
   justify-content: space-between;
   min-height: 40px;
 
+  span {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 40px;
+    flex: 1;
+    color: var(--white);
+  }
+
+  input {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 40px;
+    flex: 1;
+    color: var(--white);
+    background: transparent;
+    text-align: left;
+    border: 1px solid var(--white);
+  }
+
   button {
     width: 41px;
     height: 41px;
@@ -53,19 +74,12 @@ export const ProjectHeader = styled.div`
         0 4px 23px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(153 153 153 / 20%);
     }
   }
-
-  h1 {
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 40px;
-    flex: 1;
-  }
 `;
 
 export const CardContent = styled.div`
+  display: flex;
   margin-top: 20px;
   padding: 0 20px 20px;
-  display: flex;
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
@@ -76,32 +90,30 @@ export const CardContent = styled.div`
     font-weight: 500;
     line-height: 25px;
   }
-  p {
-    font-size: 1rem;
-    font-weight: normal;
-    line-height: 25px;
-    color: var(--text-body-light);
-    margin-top: 5px;
-  }
 `;
-export const ProjectDataContainer = styled.div`
+export const ProjectDateContainer = styled.div`
   display: flex;
   justify-content: center;
-
   width: 100%;
   justify-content: space-between;
 `;
 
-export const ProjectDataItem = styled.div`
+export const ProjectDateItem = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   padding: 5px 20px;
-  cursor: pointer;
-  transition: all 300ms linear;
   border-radius: 4px;
-  &:hover {
-    background: ${tint(0.7, '#ff9000')};
+  background: ${tint(0.8, '#ff9000')};
+
+  input {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 25px;
+    color: var(--text-body-light);
+    margin-top: 5px;
+    width: 90px;
+    border: 0;
   }
 `;
 
@@ -113,6 +125,14 @@ export const Divider = styled.div`
   margin: 15px 0;
 `;
 export const ProjectDescription = styled.div`
+  textarea {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 25px;
+    color: var(--text-body-light);
+    margin-top: 5px;
+    border: 1px solid var(--outline);
+  }
   width: 100%;
 `;
 
@@ -123,6 +143,14 @@ export const ProjectUpdated = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  p {
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 25px;
+    color: var(--text-body-light);
+    margin-top: 5px;
+  }
 `;
 
 export const ProjetcOwner = styled.div`

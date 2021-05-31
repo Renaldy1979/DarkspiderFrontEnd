@@ -1,6 +1,4 @@
 import { ReactNode } from 'react';
-import IUser from './IUser';
-import IStatus from './IStatus';
 
 export default interface IProject {
   id: string;
@@ -24,9 +22,9 @@ export default interface IProject {
   status_id: string;
   created_at: string;
   updated_at: string;
-  status: IStatus;
-  requester: IUser;
-  creater: IUser;
-  updater: IUser;
+  status: { id: string; description: string };
+  requester: { id: string; name: string };
+  creater: { id: string; name: string };
+  updater: { id: string; name: string };
   children: ReactNode;
 }

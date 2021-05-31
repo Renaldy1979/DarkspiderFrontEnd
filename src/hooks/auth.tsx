@@ -12,6 +12,7 @@ interface User {
   id: string;
   email: string;
   roles: string[];
+  permissions: string[];
   avatar_url: string;
   name: string;
 }
@@ -30,7 +31,7 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User>({} as User);
   const isAuthenticated = !!user;
   const history = useHistory();
 
@@ -41,9 +42,16 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       api
         .get('/profile')
         .then(response => {
-          const { id, roles, email, avatar_url, name } = response.data;
+          const {
+            id,
+            roles,
+            email,
+            avatar_url,
+            name,
+            permissions,
+          } = response.data;
 
-          setUser({ id, email, roles, avatar_url, name });
+          setUser({ id, email, roles, avatar_url, name, permissions });
         })
         .catch(() => {
           localStorage.removeItem('@DarkSpider:token');
@@ -64,6 +72,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
         refresh_token,
         sub: id,
         roles,
+        permissions,
         avatar_url,
         name,
       } = response.data;
@@ -77,6 +86,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
         email,
         avatar_url,
         name,
+        permissions,
       });
 
       api.defaults.headers.Authorization = `Bearer ${token}`;

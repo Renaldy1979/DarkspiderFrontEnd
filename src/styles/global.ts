@@ -46,6 +46,8 @@ export default createGlobalStyle`
     --green: #4caf50;
     --red: #f44336;
     --blue:#1D63EA;
+    --search: #fff;
+  
  
   }
 

@@ -1,20 +1,13 @@
 import React from 'react';
-
 import BottomMenu from '../../components/BottomMenu';
 import MenuBar from '../../components/MenuBar';
 import SideBar from '../../components/SideBar';
+import Header from '../../components/Header';
 import {
   Container,
   Wrapper,
   Content,
-  Header,
   Title,
-  SearchWrapper,
-  SearchInput,
-  SearchIcon,
-  NotificationWrapper,
-  Notification,
-  BellIcon,
   Main,
   GridContainer,
   GridItem,
@@ -31,23 +24,10 @@ const Initial = (): JSX.Element => {
       <Wrapper>
         <MenuBar />
         <Content>
-          <Header>
-            <Title>
-              <strong>Página Inicial</strong>
-            </Title>
-            <SearchWrapper>
-              <SearchInput
-                placeholder="Buscar na Lista"
-                // value={busca}
-                // onChange={ev => setBusca(ev.target.value)}
-              />
-              <SearchIcon />
-            </SearchWrapper>
-            <NotificationWrapper>
-              <Notification />
-              <BellIcon />
-            </NotificationWrapper>
-          </Header>
+          <Header />
+          <Title>
+            <strong>Página Inicial</strong>
+          </Title>
           <Main>
             <GridContainer>
               <GridItem>

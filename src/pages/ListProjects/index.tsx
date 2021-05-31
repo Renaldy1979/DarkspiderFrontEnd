@@ -1,29 +1,24 @@
-import React, { useEffect, useMemo, useState, memo, useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar';
 import SideBar from '../../components/SideBar';
 import BottomMenu from '../../components/BottomMenu';
+import Header from '../../components/Header';
 
 import {
   Container,
   Wrapper,
   Content,
   Title,
-  SearchWrapper,
-  SearchInput,
-  SearchIcon,
-  Header,
-  NotificationWrapper,
-  Notification,
-  BellIcon,
   Main,
   ProjectsTable,
 } from './styles';
-
 import { api } from '../../services/api';
 
-interface IProject {
+import IProject from '../../interfaces/IProject';
+
+interface Project {
   id: string;
   name: string;
   brief_description: string;
@@ -36,9 +31,20 @@ interface IProject {
   status: { id: string; description: string };
 }
 
-const ListProjects = (): JSX.Element => {
+export default function ListProjects() {
   const [projects, setProjects] = useState<IProject[]>([]);
+
   const [busca, setBusca] = useState('');
+
+  const projectsFiltered = useMemo(() => {
+    const lowerBusca = busca.toLowerCase();
+
+    return projects.filter(project =>
+      project.name.toLowerCase().includes(lowerBusca),
+    );
+  }, [busca, projects]);
+
+  const history = useHistory();
 
   useEffect(() => {
     api
@@ -51,19 +57,9 @@ const ListProjects = (): JSX.Element => {
       });
   }, []);
 
-  const projectsFiltered = useMemo(() => {
-    const lowerBusca = busca.toLowerCase();
-
-    return projects.filter(project =>
-      project.name.toLowerCase().includes(lowerBusca),
-    );
-  }, [busca, projects]);
-
-  const history = useHistory();
-
-  const handleOpenProject = useCallback(
-    (id: string) => {
-      history.push(`/show-project?id=${id}`);
+  const handleClickSelectProject = useCallback(
+    (project_id: string) => {
+      history.push(`/show-project?id=${project_id}`);
     },
     [history],
   );
@@ -73,23 +69,10 @@ const ListProjects = (): JSX.Element => {
       <Wrapper>
         <MenuBar />
         <Content>
-          <Header>
-            <Title>
-              <strong>Lista de Projetos</strong>
-            </Title>
-            <SearchWrapper>
-              <SearchInput
-                placeholder="Buscar na Lista"
-                value={busca}
-                onChange={ev => setBusca(ev.target.value)}
-              />
-              <SearchIcon />
-            </SearchWrapper>
-            <NotificationWrapper>
-              <Notification />
-              <BellIcon />
-            </NotificationWrapper>
-          </Header>
+          <Header busca={busca} setBusca={setBusca} />
+          <Title>
+            <strong>Lista de Projetos</strong>
+          </Title>
           <Main>
             <ProjectsTable>
               <table>
@@ -104,10 +87,10 @@ const ListProjects = (): JSX.Element => {
                   </tr>
                 </thead>
                 <tbody>
-                  {projectsFiltered.map((project: IProject) => (
+                  {projectsFiltered.map((project: Project) => (
                     <tr
                       key={project.id}
-                      onClick={() => handleOpenProject(project.id)}
+                      onClick={() => handleClickSelectProject(project.id)}
                       className="link"
                     >
                       <td className="fitwidth">{project.code}</td>
@@ -128,6 +111,4 @@ const ListProjects = (): JSX.Element => {
       </Wrapper>
     </Container>
   );
-};
-
-export default memo(ListProjects);
+}
