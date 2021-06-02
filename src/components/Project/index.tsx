@@ -13,13 +13,13 @@ import {
   ProjectDateContainer,
   ProjectDateItem,
   Divider,
-  ProjectHeader,
   ProjectDescription,
   ProjectJustification,
   ProjectUpdated,
   ProjetcOwner,
+  ProjectOwnerTitle,
+  ProjectOwnerContent,
   ProjectOwnerItem,
-  OwnerIcon,
   OptionsProject,
 } from './styles';
 
@@ -143,25 +143,23 @@ export function Project({ project }: ProjectProps) {
     <Container>
       <Card>
         <CardHeader>
-          <ProjectHeader>
-            <Editable
-              text={name}
-              type="input"
-              childRef={inputRef}
-              className="project-header-title"
-            >
-              <input
-                id="name"
-                ref={inputRef}
-                type="text"
-                defaultValue={name}
-                onBlur={e => onChangeValue(e.target.value, 'name', project_id)}
-              />
-            </Editable>
-            <button type="button">
-              <OptionsProject />
-            </button>
-          </ProjectHeader>
+          <Editable
+            text={name}
+            type="input"
+            childRef={inputRef}
+            className="project-header-title"
+          >
+            <input
+              id="name"
+              ref={inputRef}
+              type="text"
+              defaultValue={name}
+              onBlur={e => onChangeValue(e.target.value, 'name', project_id)}
+            />
+          </Editable>
+          <button type="button">
+            <OptionsProject />
+          </button>
         </CardHeader>
         <CardContent>
           <ProjectDescription>
@@ -335,48 +333,57 @@ export function Project({ project }: ProjectProps) {
           />
           <Divider />
           <ProjetcOwner>
-            <ProjectOwnerItem>
+            <ProjectOwnerTitle>
               <span>Solicitantes</span>
-              <OwnerIcon />
-              <p>João Stricker</p>
-              <OwnerIcon />
-              <p>Antonio Tinoco</p>
-              <OwnerIcon />
-              <p>Juliana Pilloto</p>
-              <OwnerIcon />
-              <Editable
-                text={requester?.name}
-                type="select"
-                childRef={inputRef}
-                className=""
-              >
-                <select
-                  id="requester_id"
-                  ref={inputRef}
-                  onBlur={e =>
-                    onChangeValue(e.target.value, 'requester_id', project_id)
-                  }
-                >
-                  {listUsers.map((itemUsers: IUsers) => {
-                    if (requester?.id === itemUsers.id) {
-                      usersSelected = true;
-                    } else {
-                      usersSelected = false;
-                    }
+            </ProjectOwnerTitle>
+            <ProjectOwnerContent>
+              <ProjectOwnerItem>
+                <img
+                  src={requester?.avatar_url || undefined}
+                  alt={requester?.name || 'DarkSpider Inc.'}
+                />
+                <div>
+                  <Editable
+                    text={requester?.name}
+                    type="select"
+                    childRef={inputRef}
+                    className="requester-name"
+                  >
+                    <select
+                      id="requester_id"
+                      ref={inputRef}
+                      onBlur={e =>
+                        onChangeValue(
+                          e.target.value,
+                          'requester_id',
+                          project_id,
+                        )
+                      }
+                    >
+                      {listUsers.map((itemUsers: IUsers) => {
+                        if (requester?.id === itemUsers.id) {
+                          usersSelected = true;
+                        } else {
+                          usersSelected = false;
+                        }
 
-                    return (
-                      <option
-                        key={itemUsers.id}
-                        selected={usersSelected}
-                        value={itemUsers.id}
-                      >
-                        {itemUsers.name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </Editable>
-            </ProjectOwnerItem>
+                        return (
+                          <option
+                            key={itemUsers.id}
+                            selected={usersSelected}
+                            value={itemUsers.id}
+                          >
+                            {itemUsers.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </Editable>
+                  <span>●</span>
+                  <small>Online</small>
+                </div>
+              </ProjectOwnerItem>
+            </ProjectOwnerContent>
           </ProjetcOwner>
           <Divider />
           <ProjectUpdated>

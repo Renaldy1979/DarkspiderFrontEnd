@@ -15,7 +15,7 @@ export const Content = styled.div`
   justify-content: space-between;
 `;
 
-export const Title = styled.span`
+export const Title = styled.div`
   margin: 10px 0;
   font-size: 1rem;
   font-weight: 500;

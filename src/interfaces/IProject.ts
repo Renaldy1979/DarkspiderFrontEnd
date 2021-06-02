@@ -23,7 +23,7 @@ export default interface IProject {
   created_at: string;
   updated_at: string;
   status: { id: string; description: string };
-  requester: { id: string; name: string };
+  requester: { id: string; name: string; avatar_url: string };
   creater: { id: string; name: string };
   updater: { id: string; name: string };
   children: ReactNode;

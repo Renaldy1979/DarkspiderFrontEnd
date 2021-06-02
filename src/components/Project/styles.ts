@@ -1,49 +1,39 @@
 import { tint } from 'polished';
 import styled from 'styled-components';
-import { MdPerson, BsThreeDotsVertical } from '../../styles/icons';
+import { BsThreeDotsVertical } from '../../styles/icons';
 
 export const Container = styled.div`
-  width: 100%;
-  margin-right: 30px;
+  max-width: 1000px;
+  margin-right: 50px;
+  padding-bottom: 35px;
 `;
 
 export const Card = styled.div`
-  display: flex;
   align-items: center;
-  justify-content: flex-start;
   background: var(--white);
   margin-right: 40px;
-  box-shadow: 4px 4px 4px 0 rgb(0 0 0 / 14%);
-  flex-direction: column;
-  margin-top: 30px;
+  /* box-shadow: 4px 4px 4px 0 rgb(0 0 0 / 14%); */
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
   border-radius: 4px;
+  flex-direction: column;
   width: 100%;
 `;
 
 export const CardHeader = styled.div`
-  background: var(--spider);
-  color: var(--white);
-  border-radius: 4px;
-  width: calc(100% - 30px);
-
-  position: relative;
-  margin-top: -20px;
-  box-shadow: 4px 4px 4px 0 rgb(0 0 0 / 14%);
-  padding: 10px;
-`;
-
-export const ProjectHeader = styled.div`
   display: flex;
-  /* flex-direction: column; */
+  background: var(--spider);
+  border-radius: 4px 4px 0px 0px;
+  padding: 10px;
   justify-content: space-between;
   min-height: 40px;
 
-  span {
+  .project-header-title {
     font-size: 24px;
     font-weight: 500;
     line-height: 40px;
     flex: 1;
     color: var(--white);
+    margin-left: 10px;
   }
 
   input {
@@ -51,10 +41,10 @@ export const ProjectHeader = styled.div`
     font-weight: 500;
     line-height: 40px;
     flex: 1;
-    color: var(--white);
+    color: var(--secondary);
     background: transparent;
     text-align: left;
-    border: 1px solid var(--white);
+    border: 1px solid var(--spider-light);
   }
 
   button {
@@ -65,18 +55,33 @@ export const ProjectHeader = styled.div`
     padding-left: 12px;
     padding-right: 12px;
     border-radius: 30px;
-    color: #999;
-    background-color: #fff;
+    color: var(--gray);
+    background-color: var(--white);
     border: none;
     cursor: pointer;
     &:hover {
-      box-shadow: 0 14px 26px -12px rgb(153 153 153 / 42%),
-        0 4px 23px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(153 153 153 / 20%);
+      box-shadow: 4px 4px 4px 0 rgb(0 0 0 / 14%);
     }
   }
 `;
 
 export const CardContent = styled.div`
+  .project-description-justification {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 25px;
+    color: var(--text-body-light);
+    margin-top: 5px;
+  }
+
+  .project-date-item {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 25px;
+    color: var(--text-body-light);
+    margin-top: 5px;
+  }
+
   display: flex;
   margin-top: 20px;
   padding: 0 20px 20px;
@@ -93,9 +98,10 @@ export const CardContent = styled.div`
 `;
 export const ProjectDateContainer = styled.div`
   display: flex;
-  justify-content: center;
-  width: 100%;
   justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
 `;
 
 export const ProjectDateItem = styled.div`
@@ -103,8 +109,10 @@ export const ProjectDateItem = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 5px 20px;
+  margin: 10px;
   border-radius: 4px;
   background: ${tint(0.8, '#ff9000')};
+  flex: 1;
 
   input {
     font-size: 1rem;
@@ -159,26 +167,47 @@ export const ProjetcOwner = styled.div`
   align-items: flex-start;
   width: 100%;
 `;
+export const ProjectOwnerTitle = styled.div`
+  width: 100%;
+  margin-bottom: 15px;
+  span {
+  }
+`;
+export const ProjectOwnerContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
 
 export const ProjectOwnerItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: left;
   width: 100%;
-  flex-wrap: wrap;
-  span {
-    width: 100%;
-    margin-bottom: 10px;
+  flex: 1;
+  font-weight: 400;
+  img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
   }
-  p {
-    flex: 1;
+  div {
+    .requester-name {
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
   }
-`;
 
-export const OwnerIcon = styled(MdPerson)`
-  height: 26px;
-  width: 26px;
-  margin-right: 8px;
+  span {
+    color: var(--green);
+  }
+  small {
+    font-weight: 300;
+    font-size: 14px;
+    margin-left: 5px;
+  }
 `;
 
 export const OptionsProject = styled(BsThreeDotsVertical)``;

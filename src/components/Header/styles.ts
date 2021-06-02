@@ -1,4 +1,3 @@
-import { shade } from 'polished';
 import styled from 'styled-components';
 
 import {
@@ -9,15 +8,12 @@ import {
 } from '../../styles/icons';
 
 export const Container = styled.div`
-  z-index: 1000;
-
   position: sticky;
-  background: var(--primary);
-
+  padding: 35px;
+  z-index: 10;
   > span {
     padding: 8px;
     border-radius: 50%;
-
     outline: 0;
     cursor: pointer;
 
@@ -42,32 +38,16 @@ export const SearchWrapper = styled.div`
 `;
 
 export const SearchInput = styled.input`
-  height: 39px;
+  height: 50px;
   font-size: 14px;
   padding: 0 10px 0 45px;
-  border-radius: 19.5px;
+  border-radius: 25px;
   background: var(--search);
   border: 1px solid var(--gray);
   width: 400px;
   &::placeholder {
     color: var(--gray);
   }
-`;
-
-export const SearchIcon = styled(BsSearch)`
-  width: 24px;
-  height: 24px;
-  fill: var(--gray);
-
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 12px;
-  z-index: 1;
-  transition: 180ms ease-in-out;
-  fill: var(--gray);
-
-  outline: 0;
   &:focus {
     border: 1px solid var(--spider);
 
@@ -75,6 +55,20 @@ export const SearchIcon = styled(BsSearch)`
       fill: var(--spider);
     }
   }
+`;
+
+export const SearchIcon = styled(BsSearch)`
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 50px;
+  z-index: 1;
+  transition: 180ms ease-in-out;
+  fill: var(--secondary);
+
+  outline: 0;
 `;
 
 export const BellIcon = styled(BsFillBellFill)`
@@ -113,11 +107,12 @@ export const ProfileHeader = styled.div`
 `;
 
 export const ProfileEdit = styled.div`
+  position: relative;
+  top: 50%;
   .dropdown-menu {
     font-size: 1rem;
     position: absolute;
-    top: 100%;
-    z-index: 1000;
+    top: 0;
     left: 0;
     display: none;
     float: left;
@@ -148,15 +143,14 @@ export const ProfileEdit = styled.div`
   }
 
   .dropdown-header {
-    font-size: 0.625rem;
+    font-size: 14px;
     font-weight: 700;
     padding-right: 1rem;
     padding-left: 1rem;
     text-transform: uppercase;
   }
 
-  .dropdown-header {
-    font-size: 0.875rem;
+  .dropdown-header-title {
     display: block;
     margin-bottom: 0;
     padding: 0.5rem 1rem;
@@ -165,8 +159,6 @@ export const ProfileEdit = styled.div`
   }
 
   .dropdown-menu .dropdown-item {
-    font-size: 0.875rem;
-    padding: 0.5rem 1rem;
   }
 
   .dropdown-item {
@@ -176,27 +168,18 @@ export const ProfileEdit = styled.div`
     justify-content: left;
     clear: both;
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     text-align: inherit;
     white-space: nowrap;
     color: #212529;
     border: 0;
     background-color: transparent;
-  }
+    :hover {
+      background: rgba(245, 245, 245, 0.8);
 
-  a {
-    text-decoration: none;
-    color: #5e72e4;
-    background-color: transparent;
-  }
-
-  .ni {
-    display: inline-block;
-    font: normal normal normal 14px/1 NucleoIcons;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+      pointer-events: auto;
+      opacity: 1;
+    }
   }
 
   .dropdown-divider {

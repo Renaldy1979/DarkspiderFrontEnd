@@ -56,20 +56,24 @@ export default function Header({ busca, setBusca }: HeaderParams) {
         />
         <strong>{user?.name}</strong>
       </ProfileHeader>
-      <ProfileEdit>
+      <ProfileEdit
+        className="dropdown-menu dropdown-menu-right show"
+        style={{ display: openProfile ? 'block' : 'none' }}
+      >
         <div
-          className="dropdown-menu dropdown-menu-right show"
+          className="dropdown-menu dropdown-menu-right"
           style={{ display: openProfile ? 'block' : 'none' }}
         >
-          <div className="dropdown-header noti-title">
-            <h6 className="text-overflow m-0">Welcome!</h6>
+          <div className="dropdown-header dropdown-header-title">
+            <h6>Welcome!</h6>
           </div>
+          <div className="dropdown-divider" />
+
           <button type="button" className="dropdown-item">
             <ProfileIcon />
             <span>Meu Perfil</span>
           </button>
 
-          <div className="dropdown-divider" />
           <button
             type="button"
             onClick={() => signOut()}

@@ -48,15 +48,6 @@ export const Logo = styled(DarkspiderIcon)`
 
     display: flex;
     align-items: center;
-    &::before {
-      content: '';
-      position: absolute;
-      height: 50px;
-      width: 80px;
-      left: 50;
-      top: 10%;
-      background: #ff9000;
-    }
   }
 `;
 
@@ -94,19 +85,6 @@ export const MenuButton = styled.div`
   }
   &.active {
     background: var(--spider);
-  }
-`;
-
-export const Avatar = styled.div`
-  > img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 80px;
-    height: 80px;
-    background: var(--tertiary);
-    margin-bottom: 15px;
   }
 `;
 

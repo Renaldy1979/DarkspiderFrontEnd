@@ -3,8 +3,6 @@ import { MdModeEdit, MdClose, MdSearch } from '../../styles/icons';
 
 export { Container, Wrapper, Content, Title, Main } from '../styles';
 
-export const Projects = styled.div``;
-
 export const ProjectsTable = styled.div`
   table {
     width: 100%;

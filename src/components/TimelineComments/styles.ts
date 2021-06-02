@@ -7,33 +7,51 @@ import {
   IoChatboxEllipses,
 } from '../../styles/icons';
 
+export const Header = styled.div`
+  display: flex;
+`;
 export const Container = styled.div`
+  background: var(--white);
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  border-radius: 4px;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  flex-direction: column;
+  /* max-width: 500px; */
+  /* width: 100%; */
+  flex: 1;
+  button {
+    font-size: 14px;
+    padding: 10px;
+    color: var(--white);
+  }
+
   .vertical-timeline * {
     box-sizing: border-box;
   }
 
   .vertical-timeline {
-    max-width: 600px;
+    :before {
+      /* this is the vertical line */
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 18px;
+      height: 100%;
+      width: 0px;
+      border-right: 1px dashed var(--gray);
+    }
     margin: 0 auto;
     position: relative;
     padding: 2em 0;
-  }
-  .vertical-timeline::after {
-    /* clearfix */
-    content: '';
-    display: table;
-    clear: both;
-  }
-
-  .vertical-timeline::before {
-    /* this is the vertical line */
-    content: '';
-    position: absolute;
-    top: 30px;
-    left: 18px;
-    height: 100%;
-    width: 4px;
-    background: white;
+    width: 100%;
+    :after {
+      /* clearfix */
+      content: '';
+      display: table;
+      clear: both;
+    }
   }
 
   .vertical-timeline.vertical-timeline--one-column-right::before {
@@ -88,8 +106,8 @@ export const Container = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    box-shadow: 0 0 0 4px white, inset 0 2px 0 rgba(0, 0, 0, 0.08),
-      0 3px 0 4px rgba(0, 0, 0, 0.05);
+    /* box-shadow: 0 0 0 3px white, inset 0 2px 0 rgba(0, 0, 0, 0.08),
+      0 3px 0 4px rgba(0, 0, 0, 0.05); */
   }
   .vertical-timeline--one-column-right .vertical-timeline-element-icon {
     right: 0;
@@ -191,12 +209,12 @@ export const Container = styled.div`
   }
   .vertical-timeline-element-content {
     position: relative;
-    margin-left: 60px;
-    background: white;
+    margin-left: 50px;
+    background: var(--sucess);
     border-radius: 0.25em;
-    padding: 1em;
-    box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.25),
-      0 0.4em 1.25em 0 rgba(0, 0, 0, 0.15) !important;
+    padding: 10px 0.5em 0.5em 0.5em;
+    /* box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.25),
+      0 0.4em 1.25em 0 rgba(0, 0, 0, 0.15) !important; */
     p {
       margin: 0.5em 0 0;
     }
@@ -235,6 +253,8 @@ export const Container = styled.div`
 
   .vertical-timeline-element-title {
     margin: 0;
+    font-weight: 400;
+    color: var(--text-body-dark);
   }
 
   .vertical-timeline-element-subtitle {
@@ -531,9 +551,19 @@ export const Container = styled.div`
     }
   }
 
-  #description {
+  .type-description {
+    margin-top: 10px;
+    text-transform: uppercase;
+    border-radius: 10rem;
+    font-size: 66%;
+    font-weight: 500;
+    line-height: 1;
+    display: inline-block;
+    padding: 0.5rem 0.5rem;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
   }
-
   #creater {
     display: flex;
     align-items: center;
