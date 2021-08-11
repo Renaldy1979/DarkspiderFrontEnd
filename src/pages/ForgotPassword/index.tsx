@@ -3,14 +3,10 @@ import { FiLogIn, FiMail } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-
 import { FormHandles } from '@unform/core';
-
 import { useToast } from '../../hooks/toast';
-
 import getValidationErrors from '../../utils/getValidationsErrors';
-
-import Input from '../../components/Input';
+import Input from '../../components/Form/input';
 import Button from '../../components/Button';
 
 import {

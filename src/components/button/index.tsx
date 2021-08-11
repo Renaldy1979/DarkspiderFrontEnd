@@ -6,10 +6,12 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
 };
 
-const Button: React.FC<ButtonProps> = ({ children, loading, ...rest }) => (
-  <Container type="button" {...rest}>
-    {loading ? 'CARREGANDO...' : children}
-  </Container>
-);
-
-export default Button;
+export default function Button({ children, loading, ...rest }: ButtonProps) {
+  return (
+    <Container>
+      <button type="button" {...rest}>
+        {loading ? 'CARREGANDO...' : children}
+      </button>
+    </Container>
+  );
+}

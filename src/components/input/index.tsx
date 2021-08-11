@@ -15,12 +15,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ComponentType<IconBaseProps>;
 }
 
-export function Input({ name, icon: Icon, ...rest }: InputProps) {
+export function Input({ name, icon: Icon, className, ...rest }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-
   const { fieldName, defaultValue, error, registerField } = useField(name);
 
   const handleInputFocus = useCallback(() => {
@@ -29,7 +27,6 @@ export function Input({ name, icon: Icon, ...rest }: InputProps) {
 
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
-
     setIsFilled(!!inputRef.current?.value);
   }, []);
 
@@ -42,7 +39,12 @@ export function Input({ name, icon: Icon, ...rest }: InputProps) {
   }, [fieldName, registerField]);
 
   return (
-    <Container isErrored={!!error} isFocused={isFocused} isFilled={isFilled}>
+    <Container
+      isErrored={!!error}
+      isFocused={isFocused}
+      isFilled={isFilled}
+      className={className}
+    >
       {Icon && <Icon size={20} />}
       <input
         onFocus={handleInputFocus}

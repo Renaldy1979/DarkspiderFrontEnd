@@ -5,12 +5,10 @@ import * as Yup from 'yup';
 import { useLocation, Link } from 'react-router-dom';
 
 import { FormHandles } from '@unform/core';
-
 import { useToast } from '../../hooks/toast';
-
 import getValidationErrors from '../../utils/getValidationsErrors';
 
-import Input from '../../components/Input';
+import Input from '../../components/Form/input';
 import Button from '../../components/Button';
 
 import {
@@ -76,7 +74,6 @@ const ResetPassword: React.FC = () => {
 
           return;
         }
-
         addToast({
           type: 'error',
           title: 'Erro no resetar da senha',
@@ -95,21 +92,18 @@ const ResetPassword: React.FC = () => {
           <Logo />
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Resetar Senha</h1>
-
             <Input
               name="password"
               icon={FiLock}
               type="password"
               placeholder="Nova senha"
             />
-
             <Input
               name="password_confirmation"
               icon={FiLock}
               type="password"
               placeholder="Confirmação da senha"
             />
-
             <Button type="submit">ALTERAR SENHA</Button>
           </Form>
           <Link to="/">

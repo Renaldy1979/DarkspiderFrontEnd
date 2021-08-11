@@ -34,12 +34,13 @@ export const StatusItem = styled.button<StatusItemProps>`
   cursor: pointer;
   border-radius: 4px;
   border: 0;
-  font-size: 12px;
+  font-size: 14px;
 
   ${({ active }) =>
     active &&
     `
     opacity: 1; 
+    
   `}
   ${props =>
     props.active
@@ -47,8 +48,7 @@ export const StatusItem = styled.button<StatusItemProps>`
   background: var(--green);
   color: var(--white);
   box-shadow: 3px 3px 3px 0 rgb(0 0 0 / 20%);
-  font-weight: 500;
-  font-size: 1rem;
+ 
     `
       : `
   background: var(--outline);

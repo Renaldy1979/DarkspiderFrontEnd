@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { useLocation } from 'react-router-dom';
-import MenuBar from '../../components/MenuBar';
 import Project from '../../components/Project';
-import Header from '../../components/Header';
-import { Container, Wrapper, Content, Title, Main } from './styles';
+import TimelineComments from '../../components/TimelineComments';
+import { Content } from './styles';
 
 import IProject from '../../interfaces/IProject';
 import { api } from '../../services/api';
-import TimelineComments from '../../components/TimelineComments';
+import Layout from '../../components/Layout';
 
 export default function ShowProject() {
   const [project, setProjet] = useState<IProject>({} as IProject);
@@ -25,18 +24,11 @@ export default function ShowProject() {
       });
   }, [project_id]);
   return (
-    <Container>
-      <Wrapper>
-        <MenuBar />
-        <Content>
-          <Header />
-          <Title style={{ display: 'none' }} />
-          <Main>
-            <Project project={project} />
-            <TimelineComments project_id={project.id} />
-          </Main>
-        </Content>
-      </Wrapper>
-    </Container>
+    <Layout>
+      <Content>
+        <Project project={project} />
+        <TimelineComments project_id={project.id} />
+      </Content>
+    </Layout>
   );
 }

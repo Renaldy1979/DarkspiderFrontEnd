@@ -1,4 +1,11 @@
-import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { api } from '../services/api';
@@ -8,19 +15,48 @@ interface SignInCredentials {
   password: string;
 }
 
+interface UserSignInData {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    avatar_url: string;
+    roles: Roles[];
+  };
+  token: string;
+  refresh_token: string;
+}
+
 interface User {
   id: string;
+  name: string;
   email: string;
   roles: string[];
   permissions: string[];
   avatar_url: string;
+}
+
+interface UserProfile {
+  id: string;
+  email: string;
+  roles: Roles[];
+  avatar_url: string;
+  name: string;
+}
+
+interface Roles {
+  name: string;
+  permissions: Permisions[];
+}
+
+interface Permisions {
   name: string;
 }
 
 interface AuthContextData {
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): Promise<void>;
-  isAuthenticated: boolean;
+  isAuthenticated(): boolean;
   user: User | undefined;
 }
 
@@ -30,76 +66,92 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextData);
 
-export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
-  const [user, setUser] = useState<User>({} as User);
-  const isAuthenticated = !!user;
+export function AuthProvider({ children }: AuthProviderProps) {
   const history = useHistory();
+
+  const [user, setUser] = useState<User>({} as User);
+  const isAuthenticated = useCallback(() => {
+    const token = localStorage.getItem('@DarkSpider:token');
+    if (token) {
+      return true;
+    }
+    return false;
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('@DarkSpider:token');
-
     if (token) {
       api
-        .get('/profile')
+        .get<UserProfile>('/profile')
         .then(response => {
-          const {
+          const { id, name, email, roles, avatar_url } = response.data;
+          const userRoles = roles.map(role => role.name);
+          const permissions = roles
+            .map(rolePermission =>
+              rolePermission.permissions.map(permission => permission.name),
+            )
+            .toString()
+            .split(',');
+
+          const userPermissions = permissions.filter(
+            (este, i) => permissions.indexOf(este) === i,
+          );
+
+          setUser({
             id,
-            roles,
             email,
+            roles: userRoles,
             avatar_url,
             name,
-            permissions,
-          } = response.data;
-
-          setUser({ id, email, roles, avatar_url, name, permissions });
+            permissions: userPermissions,
+          });
         })
         .catch(() => {
-          localStorage.removeItem('@DarkSpider:token');
-          localStorage.removeItem('@DarkSpider:refresh_token');
-          history.push('/');
+          signOut();
         });
     }
-  }, [history]);
+  }, []);
+
   async function signIn({ email, password }: SignInCredentials) {
-    try {
-      const response = await api.post('/sessions', {
-        email,
-        password,
-      });
+    const response = await api.post<UserSignInData>('/sessions', {
+      email,
+      password,
+    });
+    const { token, refresh_token } = response.data;
+    const { name, avatar_url, roles, id } = response.data.user;
+    const userRoles = roles.map(role => role.name);
+    const permissions = roles
+      .map(rolePermission =>
+        rolePermission.permissions.map(permission => permission.name),
+      )
+      .toString()
+      .split(',');
 
-      const {
-        token,
-        refresh_token,
-        sub: id,
-        roles,
-        permissions,
-        avatar_url,
-        name,
-      } = response.data;
+    const userPermissions = permissions.filter(
+      (este, i) => permissions.indexOf(este) === i,
+    );
 
-      localStorage.setItem('@DarkSpider:token', token);
-      localStorage.setItem('@DarkSpider:refresh_token', refresh_token);
+    const userData: User = {
+      id,
+      name,
+      email,
+      roles: userRoles,
+      permissions: userPermissions,
+      avatar_url,
+    };
 
-      setUser({
-        id,
-        roles,
-        email,
-        avatar_url,
-        name,
-        permissions,
-      });
+    localStorage.setItem('@DarkSpider:token', token);
+    localStorage.setItem('@DarkSpider:refresh_token', refresh_token);
 
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-      history.push('/initial');
-    } catch (err) {
-      console.log(err);
-    }
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+    setUser(userData);
+    history.push('/initial');
   }
 
   async function signOut() {
     localStorage.removeItem('@DarkSpider:token');
     localStorage.removeItem('@DarkSpider:refresh_token');
-    history.push('/');
+    setUser({} as User);
   }
 
   return (
@@ -107,4 +159,14 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth(): AuthContextData {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  return context;
 }

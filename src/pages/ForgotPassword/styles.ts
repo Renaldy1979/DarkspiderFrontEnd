@@ -41,6 +41,11 @@ export const AnimationContainer = styled.div`
     text-align: center;
     h1 {
       margin-bottom: 24px;
+      font-size: 20px;
+    }
+    button {
+      width: 100%;
+      height: 56px;
     }
   }
   a {

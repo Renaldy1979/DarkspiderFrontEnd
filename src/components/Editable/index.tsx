@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useCan } from '../../hooks/useCan';
 
 import { Container } from './styles';
 
@@ -20,6 +21,9 @@ export function Editable({
     setEditing(false);
   }, []);
 
+  const useCanEditable = useCan({
+    roles: ['ROLE_ADMIN'],
+  });
   useEffect(() => {
     if (childRef && childRef.current && isEditing === true) {
       childRef.current.focus();
@@ -39,6 +43,15 @@ export function Editable({
     }
   };
 
+  if (!useCanEditable) {
+    return (
+      <Container {...props}>
+        <div aria-hidden="true" className={className}>
+          {text || ''}
+        </div>
+      </Container>
+    );
+  }
   return (
     <Container {...props}>
       {isEditing ? (

@@ -1,3 +1,5 @@
+export { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
+
 export {
   FiArrowLeft,
   FiClock,
@@ -11,8 +13,15 @@ export {
   IoAlertCircleSharp,
   IoChatboxEllipses,
   IoCheckmarkCircleSharp,
+  IoSearchSharp,
 } from 'react-icons/io5';
-export { IoIosMail } from 'react-icons/io';
+export {
+  IoIosMail,
+  IoIosArrowDown,
+  IoIosArrowUp,
+  IoIosArrowForward,
+  IoIosArrowBack,
+} from 'react-icons/io';
 export {
   BsBell,
   BsSearch,
@@ -32,4 +41,7 @@ export { GoProject } from 'react-icons/go';
 export { GiSupersonicArrow } from 'react-icons/gi';
 export { FaArrowAltCircleRight } from 'react-icons/fa';
 export { GiOrganigram } from 'react-icons/gi';
+export { CgFolderAdd } from 'react-icons/cg';
+export { ImEnter } from 'react-icons/im';
+
 export { DarkspiderIcon } from '../components/DarkspiderIcon';

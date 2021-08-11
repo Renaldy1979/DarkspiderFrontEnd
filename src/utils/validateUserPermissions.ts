@@ -1,6 +1,6 @@
 type User = {
-  permissions: string[];
   roles: string[];
+  permissions: string[];
 };
 
 type ValidateUserPermissionsParams = {

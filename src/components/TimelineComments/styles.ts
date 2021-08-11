@@ -9,17 +9,18 @@ import {
 
 export const Header = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `;
 export const Container = styled.div`
   background: var(--white);
-  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  // box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
   border-radius: 4px;
   padding-left: 15px;
   padding-right: 15px;
   display: flex;
   flex-direction: column;
-  /* max-width: 500px; */
-  /* width: 100%; */
   flex: 1;
   button {
     font-size: 14px;
@@ -38,7 +39,7 @@ export const Container = styled.div`
       position: absolute;
       top: 32px;
       left: 18px;
-      height: 100%;
+      height: 92%;
       width: 0px;
       border-right: 1px dashed var(--gray);
     }
@@ -106,8 +107,6 @@ export const Container = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    /* box-shadow: 0 0 0 3px white, inset 0 2px 0 rgba(0, 0, 0, 0.08),
-      0 3px 0 4px rgba(0, 0, 0, 0.05); */
   }
   .vertical-timeline--one-column-right .vertical-timeline-element-icon {
     right: 0;
@@ -213,8 +212,7 @@ export const Container = styled.div`
     background: var(--sucess);
     border-radius: 0.25em;
     padding: 10px 0.5em 0.5em 0.5em;
-    /* box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.25),
-      0 0.4em 1.25em 0 rgba(0, 0, 0, 0.15) !important; */
+
     p {
       margin: 0.5em 0 0;
     }

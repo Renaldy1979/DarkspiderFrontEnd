@@ -3,4 +3,10 @@ export default interface IUser {
   name: string;
   email: string;
   avatar_url: string;
+  roles: [
+    {
+      id: string;
+      description: string;
+    },
+  ];
 }

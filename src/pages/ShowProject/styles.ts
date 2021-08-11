@@ -1,1 +1,6 @@
-export { Container, Wrapper, Content, Title, Main } from '../styles';
+import styled from 'styled-components';
+
+export const Content = styled.div`
+  padding: 20px;
+  display: flex;
+`;

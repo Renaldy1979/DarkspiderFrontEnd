@@ -1,16 +1,22 @@
 import styled from 'styled-components';
 
-import {
-  BsSearch,
-  BsFillBellFill,
-  MdExitToApp,
-  BsPersonFill,
-} from '../../styles/icons';
+import { BsSearch, MdExitToApp, BsPersonFill } from '../../styles/icons';
 
 export const Container = styled.div`
-  position: sticky;
-  padding: 35px;
-  z-index: 10;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+`;
+
+export const Top = styled.div`
+  z-index: 1000;
+  display: flex;
+  position: relative;
+  align-items: center;
+  top: 0;
+  padding: 20px;
   > span {
     padding: 8px;
     border-radius: 50%;
@@ -21,13 +27,9 @@ export const Container = styled.div`
       background: var(--gray);
     }
   }
-
-  @media (min-width: 768px) {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
 `;
+
+export const Bottom = styled.div``;
 
 export const SearchWrapper = styled.div`
   display: flex;
@@ -45,15 +47,17 @@ export const SearchInput = styled.input`
   background: var(--search);
   border: 1px solid var(--gray);
   width: 400px;
+  outline: 0;
+  transition: width 0.1s;
   &::placeholder {
     color: var(--gray);
   }
   &:focus {
     border: 1px solid var(--spider);
-
     ~ svg {
       fill: var(--spider);
     }
+    width: calc(400px + 10%);
   }
 `;
 
@@ -63,27 +67,17 @@ export const SearchIcon = styled(BsSearch)`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 50px;
+  left: 40px;
   z-index: 1;
   transition: 180ms ease-in-out;
   fill: var(--secondary);
-
   outline: 0;
-`;
-
-export const BellIcon = styled(BsFillBellFill)`
-  width: 24px;
-  height: 24px;
-  margin-left: 20px;
-  display: flex;
-  justify-content: center;
 `;
 
 export const NotificationWrapper = styled.div`
   margin-right: 30px;
+  z-index: 1000;
 `;
-
-export const Notification = styled.div``;
 
 export const ProfileHeader = styled.div`
   display: none;
@@ -94,8 +88,8 @@ export const ProfileHeader = styled.div`
     cursor: pointer;
     > strong {
       font-size: 15px;
-      font-weight: 400;
-      color: var(--text-body-dark);
+      font-weight: 500;
+      color: var(--white);
     }
     img {
       width: 40px;

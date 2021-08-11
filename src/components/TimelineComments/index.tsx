@@ -31,6 +31,8 @@ import { api } from '../../services/api';
 import Button from '../Button';
 import { useUsers } from '../../hooks/useUsers';
 import { useToast } from '../../hooks/toast';
+import Can from '../Can';
+import Card from '../Card';
 
 interface TimelineCommentsProps {
   project_id: string;
@@ -139,119 +141,128 @@ export function TimelineComments({ project_id }: TimelineCommentsProps) {
       });
     }
   }
-
-  return (
-    <Container>
-      <Header>
+  const header = (
+    <Header>
+      <Can permissions={['project.timeline.create']} roles={['ROLE_USER']}>
         <Button type="button" onClick={handleOpenNewCommentModal}>
           NOVO COMENTÁRIO
         </Button>
-      </Header>
-
-      <Modal
-        isOpen={isNewCommentModalOpen}
-        // onRequestClose={handleCloseNewCommentModal}
-        // style={customStyles}
-        className="new-comment-modal"
-        overlayClassName="new-comment-modal-overlay"
-      >
-        <div className="new-comment-modal-title">
-          <strong>Inserir novo comentário</strong>
-        </div>
-        <div className="new-comment-modal-divider" />
-        <form
-          ref={formRef}
-          onSubmit={handleCreateNewComment}
-          className="new-comment-modal-form"
+      </Can>
+      <Can>
+        <Button type="button">ATUALIZAR</Button>
+      </Can>
+    </Header>
+  );
+  return (
+    <Card top header={header}>
+      <Container>
+        <Modal
+          isOpen={isNewCommentModalOpen}
+          className="new-comment-modal"
+          overlayClassName="new-comment-modal-overlay"
         >
-          <h1>Comentário</h1>
-          <textarea
-            name="comment"
-            rows={4}
-            placeholder="Insira aqui seu comentário"
-            value={formDescription}
-            onChange={event => setFormDescription(event.target.value)}
-          />
-          <h1>Tipo do comentário</h1>
-          <div className="new-comment-modal-form-type">
-            {commentTypes.map(typeItem => {
+          <div className="new-comment-modal-title">
+            <strong>Inserir novo comentário</strong>
+          </div>
+          <div className="new-comment-modal-divider" />
+          <form
+            ref={formRef}
+            onSubmit={handleCreateNewComment}
+            className="new-comment-modal-form"
+          >
+            <h1>Comentário</h1>
+            <textarea
+              name="comment"
+              rows={4}
+              placeholder="Insira aqui seu comentário"
+              value={formDescription}
+              onChange={event => setFormDescription(event.target.value)}
+            />
+            <h1>Tipo do comentário</h1>
+            <div className="new-comment-modal-form-type">
+              {commentTypes.map(typeItem => {
+                return (
+                  <span key={typeItem.id}>
+                    <input
+                      type="radio"
+                      value={typeItem.id}
+                      name="type_id"
+                      defaultChecked
+                      onClick={event => setFormType(event.currentTarget.value)}
+                    />
+                    <span
+                      style={{
+                        background: `var(${typeItem.color}-light)`,
+                        color: `var(${typeItem.color}-dark)`,
+                      }}
+                    >
+                      {typeItem.description}
+                    </span>
+                  </span>
+                );
+              })}
+            </div>
+            <div className="new-comment-modal-form-buttom">
+              <Button type="submit">SALVAR</Button>
+              <Button type="button" onClick={handleCloseNewCommentModal}>
+                FECHAR
+              </Button>
+            </div>
+          </form>
+        </Modal>
+        <VerticalTimeline
+          layout="1-column"
+          animate
+          className="vertical-timeline"
+        >
+          {comments
+            .sort((x, y) => {
               return (
-                <span key={typeItem.id}>
-                  <input
-                    type="radio"
-                    value={typeItem.id}
-                    name="type_id"
-                    defaultChecked
-                    onClick={event => setFormType(event.currentTarget.value)}
-                  />
+                new Date(y.created_at).getTime() -
+                new Date(x.created_at).getTime()
+              );
+            })
+            .map(commentItem => {
+              return (
+                <VerticalTimelineElement
+                  key={commentItem.id}
+                  className="vertical-timeline-element-work"
+                  contentStyle={{
+                    background: 'rgb(255, 255, 255)',
+                    color: '#999591',
+                    height: '100%',
+                  }}
+                  iconStyle={{
+                    background: `var(${commentItem.type.color}-light)`,
+                    color: `var(${commentItem.type.color}-dark)`,
+                  }}
+                  icon={switchCase(commentItem.type.component)}
+                >
+                  <h1 className="vertical-timeline-element-title">
+                    {`${format(
+                      new Date(commentItem.created_at),
+                      "dd'/'MM '/'yyyy",
+                      {
+                        locale: ptBR,
+                      },
+                    )} por ${commentItem.creater.name}`}
+                  </h1>
+                  <p className="description">{commentItem.description}</p>
                   <span
+                    className="type-description"
                     style={{
-                      background: `var(${typeItem.color}-light)`,
-                      color: `var(${typeItem.color}-dark)`,
+                      color: `var(${commentItem.type.color}-dark)`,
+                      background: `var(${commentItem.type.color}-light)`,
                     }}
                   >
-                    {typeItem.description}
+                    {commentItem.type.description}
                   </span>
-                </span>
+                </VerticalTimelineElement>
               );
             })}
-          </div>
-          <div className="new-comment-modal-form-buttom">
-            <Button type="submit">SALVAR</Button>
-            <Button type="button" onClick={handleCloseNewCommentModal}>
-              FECHAR
-            </Button>
-          </div>
-        </form>
-      </Modal>
-      <VerticalTimeline layout="1-column" animate className="vertical-timeline">
-        {comments
-          .sort((x, y) => {
-            return (
-              new Date(y.created_at).getTime() -
-              new Date(x.created_at).getTime()
-            );
-          })
-          .map(commentItem => {
-            return (
-              <VerticalTimelineElement
-                key={commentItem.id}
-                className="vertical-timeline-element-work"
-                contentStyle={{
-                  background: 'rgb(255, 255, 255)',
-                  color: '#999591',
-                  height: '100%',
-                }}
-                iconStyle={{
-                  background: `var(${commentItem.type.color}-light)`,
-                  color: `var(${commentItem.type.color}-dark)`,
-                }}
-                icon={switchCase(commentItem.type.component)}
-              >
-                <h1 className="vertical-timeline-element-title">
-                  {`${format(
-                    new Date(commentItem.created_at),
-                    "dd'/'MM '/'yyyy",
-                    {
-                      locale: ptBR,
-                    },
-                  )} por ${commentItem.creater.name}`}
-                </h1>
-                <p className="description">{commentItem.description}</p>
-                <span
-                  className="type-description"
-                  style={{
-                    color: `var(${commentItem.type.color}-dark)`,
-                    background: `var(${commentItem.type.color}-light)`,
-                  }}
-                >
-                  {commentItem.type.description}
-                </span>
-              </VerticalTimelineElement>
-            );
-          })}
-      </VerticalTimeline>
-    </Container>
+        </VerticalTimeline>
+      </Container>
+    </Card>
   );
 }
 

@@ -5,8 +5,15 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    outline: 0;
   }
+  ul,
+  li
+    {
+      margin: 0px;
+      padding: 0px;
+      list-style: none;
+
+    }
 
   html, body, #root {
     max-height: 100vh;
@@ -15,7 +22,7 @@ export default createGlobalStyle`
     width: 100%;
     height: 100%;
 
-    background: #F4EDE8;
+    background: #f8f9fe;
     color: #3E3B47;
     -webkit-font-smoothing: antialiased;
 
@@ -23,7 +30,20 @@ export default createGlobalStyle`
   *, input, button {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-
+  }
+ 
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+    -webkit-text-fill-color: #514C5C;
+    transition: background-color 5000s ease-in-out 0s;
   }
   h1, h2, h3, h4, h5, h6, strong, span {
     font-weight: 500;
@@ -46,6 +66,7 @@ export default createGlobalStyle`
     --red: #f80031;
     --blue: #1D63EA;
     --search: #fff;
+    --black: #000;
     --comment-status-dark: #1aae6f;
     --comment-status-light: #b0eed3;
     --comment-alert-dark: #f80031;
@@ -56,6 +77,7 @@ export default createGlobalStyle`
   }
 
     .new-comment-modal {
+    z-index: 3;
     top: 50%;
     left: 50%;
     right: auto;
@@ -160,5 +182,6 @@ export default createGlobalStyle`
     bottom: 0;
     right: 0;
     left: 0;
+    z-index: 3;
   }
 `;

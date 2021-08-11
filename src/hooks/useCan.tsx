@@ -18,6 +18,10 @@ export function useCan({ permissions, roles }: UseCanParams) {
     return false;
   }
 
+  if (Object.keys(user).length === 0) {
+    return false;
+  }
+
   const userHasValidPermissions = validateUserPermissions({
     user,
     permissions,

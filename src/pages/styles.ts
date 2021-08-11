@@ -1,56 +1,97 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+import { IoHome, IoSearch, BsBell, IoIosMail } from '../styles/icons';
+
+type TitleProps = {
+  hidden?: boolean;
+};
 
 export const Container = styled.div`
-  background: var(--primary);
+  background: var(--secondary);
 `;
 
 export const Wrapper = styled.div`
   height: 100%;
-  /* max-width: 1280px; */
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
 `;
 
-export const Content = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  width: min(1001px, 100%);
-
-  @media (min-width: 500px) {
-  }
-`;
-export const Title = styled.div`
-  margin-left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  padding: 25px;
-  padding-left: 35px;
-  max-height: 30px;
-
-  > strong {
-    font-size: 20px;
-    font-weight: 500;
-    margin-left: 0px;
-  }
-`;
 export const Main = styled.div`
-  z-index: 0;
   display: flex;
+  flex-direction: column;
+  width: 100%;
   background: var(--primary);
-  padding-right: 30px;
-  padding-left: 30px;
-  margin-top: 0px;
+  @media (min-width: 700px) {
+    border-left: 0px solid var(--outline);
+    border-right: 0px solid var(--outline);
+  }
 `;
 
-// export const BackgroundHead = styled.div`
-//   background: pink;
-//   content: 's';
-//   height: 20px;
-//   display: flex;
-//   width: 100%;
-//   flex-direction: row;
-// `;
+export const Title = styled.div<TitleProps>`
+  ${props =>
+    props.hidden
+      ? css`
+          display: none;
+        `
+      : css`
+          margin-left: 0;
+          display: block;
+          width: 100%;
+          padding: 25px;
+          max-height: 30px;
+
+          > strong {
+            font-size: 20px;
+            font-weight: 500;
+            margin-left: 0px;
+          }
+        `}
+`;
+
+export const BottomMenu = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background: var(--primary);
+  width: 100%;
+  border-top: 1px solid var(--outline);
+  display: flex;
+  justify-content: space-between;
+  padding: 8px min(46px, max(10vw, 10px));
+  @media (min-width: 600px) {
+    display: none;
+  }
+`;
+
+const iconCSS = css`
+  width: 24px;
+  height: 24px;
+
+  cursor: pointer;
+
+  fill: var(--gray);
+
+  &:hover,
+  &.active {
+    fill: var(--spider);
+  }
+`;
+
+export const HomeIcon = styled(IoHome)`
+  ${iconCSS}
+`;
+
+export const SearchIcon = styled(IoSearch)`
+  ${iconCSS}
+`;
+
+export const BellIcon = styled(BsBell)`
+  ${iconCSS}
+`;
+
+export const EmailIcon = styled(IoIosMail)`
+  ${iconCSS}
+`;

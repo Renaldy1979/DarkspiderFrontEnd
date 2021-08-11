@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef, memo } from 'react';
 
+import { useCan } from '../../hooks/useCan';
 import {
   Container,
   ArrowIcon,
@@ -21,6 +22,10 @@ interface ProjectStatusProps {
 function ProjectStatus({ statusId, onChangeValue, id }: ProjectStatusProps) {
   const [status, setStatus] = useState<IStatus[]>([]);
   const [active, setActive] = useState(statusId);
+
+  const userCanEditable = useCan({
+    roles: ['ROLE_ADMIN'],
+  });
 
   const statusItemRef = useRef(null);
 
@@ -60,14 +65,24 @@ function ProjectStatus({ statusId, onChangeValue, id }: ProjectStatusProps) {
           .map((statusItem: IStatus) => {
             return (
               <Item key={statusItem.id.toString()}>
-                <StatusItem
-                  ref={statusItemRef}
-                  onClick={() => handleChangeFocus(statusItem.id)}
-                  active={active === statusItem.id}
-                  aria-hidden="true"
-                >
-                  {statusItem.description}
-                </StatusItem>
+                {userCanEditable ? (
+                  <StatusItem
+                    ref={statusItemRef}
+                    onClick={() => handleChangeFocus(statusItem.id)}
+                    active={active === statusItem.id}
+                    aria-hidden="true"
+                  >
+                    {statusItem.description}
+                  </StatusItem>
+                ) : (
+                  <StatusItem
+                    ref={statusItemRef}
+                    active={active === statusItem.id}
+                    aria-hidden="true"
+                  >
+                    {statusItem.description}
+                  </StatusItem>
+                )}
                 <ArrowIcon />
               </Item>
             );

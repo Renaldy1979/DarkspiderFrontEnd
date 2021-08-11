@@ -12,7 +12,6 @@ export const Card = styled.div`
   align-items: center;
   background: var(--white);
   margin-right: 40px;
-  /* box-shadow: 4px 4px 4px 0 rgb(0 0 0 / 14%); */
   box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
   border-radius: 4px;
   flex-direction: column;
@@ -21,19 +20,12 @@ export const Card = styled.div`
 
 export const CardHeader = styled.div`
   display: flex;
-  background: var(--spider);
-  border-radius: 4px 4px 0px 0px;
-  padding: 10px;
   justify-content: space-between;
-  min-height: 40px;
 
   .project-header-title {
     font-size: 24px;
     font-weight: 500;
-    line-height: 40px;
     flex: 1;
-    color: var(--white);
-    margin-left: 10px;
   }
 
   input {
@@ -45,23 +37,6 @@ export const CardHeader = styled.div`
     background: transparent;
     text-align: left;
     border: 1px solid var(--spider-light);
-  }
-
-  button {
-    width: 41px;
-    height: 41px;
-    font-size: 20px;
-    min-width: 41px;
-    padding-left: 12px;
-    padding-right: 12px;
-    border-radius: 30px;
-    color: var(--gray);
-    background-color: var(--white);
-    border: none;
-    cursor: pointer;
-    &:hover {
-      box-shadow: 4px 4px 4px 0 rgb(0 0 0 / 14%);
-    }
   }
 `;
 

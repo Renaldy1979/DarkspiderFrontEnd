@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import Card from '../Card';
 import {
   formatDateToDisplay,
   formatDateToDefault,
@@ -7,7 +8,6 @@ import {
 
 import {
   Container,
-  Card,
   CardHeader,
   CardContent,
   ProjectDateContainer,
@@ -139,28 +139,29 @@ export function Project({ project }: ProjectProps) {
     },
     [addToast, listUsers],
   );
+
+  const header = (
+    <CardHeader>
+      <Editable
+        text={name}
+        type="input"
+        childRef={inputRef}
+        className="project-header-title"
+      >
+        <input
+          id="name"
+          ref={inputRef}
+          type="text"
+          defaultValue={name}
+          onBlur={e => onChangeValue(e.target.value, 'name', project_id)}
+        />
+      </Editable>
+    </CardHeader>
+  );
+
   return (
     <Container>
-      <Card>
-        <CardHeader>
-          <Editable
-            text={name}
-            type="input"
-            childRef={inputRef}
-            className="project-header-title"
-          >
-            <input
-              id="name"
-              ref={inputRef}
-              type="text"
-              defaultValue={name}
-              onBlur={e => onChangeValue(e.target.value, 'name', project_id)}
-            />
-          </Editable>
-          <button type="button">
-            <OptionsProject />
-          </button>
-        </CardHeader>
+      <Card header={header} top>
         <CardContent>
           <ProjectDescription>
             <span>Breve Descrição</span>
